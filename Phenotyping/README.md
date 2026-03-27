@@ -193,37 +193,79 @@ Ideas:
 - Each RULE has a clear effect on one CHARACTERISTIC 
 - A CHARACTERISTIC can be used to generate a new QUESTION that is translated into a RULE
 - A RULE can be evaluated using the CHARACTERISTICS to determine its 
+- Nice to have: Each CHARACTERISTIC has a VISUALIZATION/markdown
 
 
 
 ```mermaid
 flowchart LR
 
-RULE --> QUESTION
-QUESTION --> CHARACTERISTIC
-CHARACTERISTIC --> RULE
-
 CHARACTERISTIC --[generates a]--> QUESTION
+QUESTION --[translates into a]--> RULE
+RULE --[Triggers]--> CHARACTERISTIC
 
-RULE --[]--> QUESTION
 ```
 
 
 
-Example 
+## Examples 
 
-QUESTION: Does the condition only apply to males?
-RULE: Inclusion criteria, include only patietns with sex=8240
-CHARACTERISTIC: Sex Distribution 99% Male
+- QUESTION: Does the condition only apply to males? 
+- RULE: Inclusion criteria, include only patietns with sex=8240 
+- CHARACTERISTIC: Sex Distribution 99% Male 
 
 
+### Example workflow 
 
-RULESET:
-- RULE1
-
-Ask the llm medical expert to add more questions based on the 
-
+User starts with QUESTION_1, that generates RULE_1
 
 RULESET:
-- RULE1
-- RULE2 : 
+- RULE_1
+
+Ask the llm medical expert to add more questions based on Its knowledge, It suggests
+- QUESTION_2
+
+RULESET:
+- RULE_1
+- RULE_2 
+
+run rules, get CHARACTERISTICs
+
+CHARACTERISTIC
+- CHARACTERISTIC_1
+- CHARACTERISTIC_2
+- ...
+- CHARACTERISTIC_5
+- CHARACTERISTIC_6
+
+Test that that the rules had an effect 
+- CHARACTERISTIC_1 confirms RULE_1
+- CHARACTERISTIC_2 confirms RULE_2
+
+Ask the llm to add more questions based on the Characteristics
+- CHARACTERISTIC_5 generates QUESTION_5
+- CHARACTERISTIC_6 generates QUESTION_6
+
+New questions lead to increase ruleset 
+
+RULESET:
+- RULE_1
+- RULE_2
+- RULE_5
+- RULE_6
+
+Go Back to start 
+
+## QUESTIONS
+
+#### Demographics
+- Sex
+- Age of onset
+
+#### Medical events
+- To have the initial diagnose at least 2 times
+- To have an additional atleast  10 drug purchases
+- 
+
+#### Database specific 
+- Do we need a time limit were to run the cohort, eg we are using lab value, but only measurements exists from 2014 onwards  
